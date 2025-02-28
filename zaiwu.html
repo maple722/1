@@ -1,16 +1,53 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>载物阿</title>
+    <title>Bar Chart Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>载物阿</h1>
-    <p>
-        载物你真伟大<br>
-        我祝福你<br>
-        载物你是如此伟大
-    </p>
+    <h1>Bar Chart Generator</h1>
+    <label for="chartTitle">Title:</label>
+    <input type="text" id="chartTitle"><br><br>
+    
+    <label for="dataNames">Data Names (comma separated):</label>
+    <input type="text" id="dataNames"><br><br>
+    
+    <label for="dataValues">Data Values (comma separated):</label>
+    <input type="text" id="dataValues"><br><br>
+    
+    <button onclick="generateChart()">Generate Chart</button>
+    
+    <canvas id="myChart" width="400" height="200"></canvas>
+    
+    <script>
+        function generateChart() {
+            const title = document.getElementById('chartTitle').value;
+            const dataNames = document.getElementById('dataNames').value.split(',');
+            const dataValues = document.getElementById('dataValues').value.split(',').map(Number);
+            
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dataNames,
+                    datasets: [{
+                        label: title,
+                        data: dataValues,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
